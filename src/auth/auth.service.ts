@@ -47,6 +47,7 @@ export class AuthService {
     });
 
     if (!user) {
+      console.log('Создание аккаунта');
       // Create new user
       user = await this.prisma.user.create({
         data: {
