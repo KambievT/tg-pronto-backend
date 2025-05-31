@@ -38,30 +38,57 @@ export class BotService implements OnModuleInit {
       const text = msg.text;
 
       if (text === '/start') {
-        await this.bot.sendMessage(chatId, 'Привет! Я бот от кафе "Pronto"', {
-          reply_markup: {
-            keyboard: [
-              [
-                {
-                  text: 'Открыть приложение',
-                  web_app: {
-                    url: `https://telegram-pronto-bot.vercel.app?telegramId=${msg.from.id}`,
+        try {
+          const userData = {
+            id: msg.from.id,
+            username: msg.from.username,
+            first_name: msg.from.first_name,
+            last_name: msg.from.last_name,
+            photo_url: msg.from.photo_url,
+          };
+
+          const user = await this.authService.validateTelegramUser(userData);
+          const isNewUser = !(await this.authService.findUserByTelegramId(
+            userData.id,
+          ));
+
+          const welcomeMessage = isNewUser
+            ? `Добро пожаловать, ${user.firstName}! Ваш аккаунт успешно создан.`
+            : `С возвращением, ${user.firstName}! Вы успешно вошли в систему.`;
+
+          await this.bot.sendMessage(chatId, welcomeMessage);
+
+          await this.bot.sendMessage(chatId, 'Привет! Я бот от кафе "Pronto"', {
+            reply_markup: {
+              keyboard: [
+                [
+                  {
+                    text: 'Открыть приложение',
+                    web_app: {
+                      url: `https://telegram-pronto-bot.vercel.app?telegramId=${msg.from.id}`,
+                    },
                   },
-                },
+                ],
+                [
+                  {
+                    text: '👤 Мой профиль',
+                  },
+                ],
               ],
-              [
-                {
-                  text: '👤 Мой профиль',
-                },
-              ],
-            ],
-            resize_keyboard: true,
-          },
-        });
-        await this.bot.sendMessage(
-          chatId,
-          'Я предназначен для обработки ваших заказов и отправки вам данных,вы можете открыть приложение нажав на кнопку снизу.',
-        );
+              resize_keyboard: true,
+            },
+          });
+          await this.bot.sendMessage(
+            chatId,
+            'Я предназначен для обработки ваших заказов и отправки вам данных,вы можете открыть приложение нажав на кнопку снизу.',
+          );
+        } catch (error) {
+          this.logger.error(`Authentication error: ${error.message}`);
+          await this.bot.sendMessage(
+            chatId,
+            'Произошла ошибка при аутентификации. Пожалуйста, попробуйте позже.',
+          );
+        }
       } else if (text === '/profile' || text === '👤 Мой профиль') {
         try {
           this.logger.log(`Checking profile for user ${msg.from.id}`);
