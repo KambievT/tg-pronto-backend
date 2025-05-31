@@ -33,4 +33,5 @@ bootstrap();
 
 /*
 ['https://telegram-pronto-bot.vercel.app', 'http://localhost:3000']
+postgresql://postgres:OYqSqudWaPHKhBAmIwCUxdTQIQnPHFUh@yamabiko.proxy.rlwy.net:42813/railway
 */
