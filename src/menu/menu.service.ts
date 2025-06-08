@@ -55,7 +55,7 @@ export const menu = [
     id: 6,
     name: 'Классический бургер',
     description:
-      'Булка, котлета говяжья, лук красный, сыр чеддер, томаты, салат, соус песто,...',
+      'Булка, котлета говяжья, лук красный, сыр чеддер, томаты, салат, соус песто',
     image:
       'https://avatars.mds.yandex.net/get-sprav-products/13672565/2a00000191e5ea9400c534d4276d4951f5aa/orig',
     price: 190,
@@ -152,8 +152,7 @@ export const menu = [
   {
     id: 16,
     name: 'Пицца Риальто 30 и 35 см',
-    description:
-      'Крамболь, салями, ветчина, томаты, сливочный соус, маслины...',
+    description: 'Крамболь, салями, ветчина, томаты, сливочный соус, маслины',
     image:
       'https://avatars.mds.yandex.net/get-sprav-products/2893106/2a0000019209ff84b1648c26bd00357bc180/orig',
     price: 255,
@@ -163,7 +162,7 @@ export const menu = [
     id: 17,
     name: 'Пицца Цезарь 30 и 35 см',
     description:
-      'Соус цезарь, филе цыпленка, салат, пармезан, моцарелла, томаты, суха...',
+      'Соус цезарь, филе цыпленка, салат, пармезан, моцарелла, томаты',
     image:
       'https://avatars.mds.yandex.net/get-sprav-products/1424222/2a000001920a0622ab76d6fe95829d4bc09a/orig',
     price: 270,
@@ -178,4 +177,6 @@ export class MenuService {
   async getMenu() {
     return menu;
   }
+
+  
 }
