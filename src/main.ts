@@ -27,11 +27,9 @@ async function bootstrap() {
     maxAge: 3600,
   });
 
-  await app.listen(process.env.PORT ?? 4000);
+  const port = parseInt(process.env.PORT, 10) || 4000;
+  await app.listen(port, '0.0.0.0');
+  console.log(`🚀 Server is listening on http://0.0.0.0:${port}`);
 }
-bootstrap();
 
-/*
-['https://telegram-pronto-bot.vercel.app', 'http://localhost:3000']
-postgresql://postgres:OYqSqudWaPHKhBAmIwCUxdTQIQnPHFUh@yamabiko.proxy.rlwy.net:42813/railway
-*/
+bootstrap();
